@@ -43,6 +43,7 @@ users.ToList().ForEach(user =>
         Absenteeism = studentUsers[i].Absenteeism,
         Marks = studentUsers[i].Marks
     };
+    db.Students.Add(addedStudent);
 
     Jobber addedJobber = new Jobber
     {
@@ -50,6 +51,7 @@ users.ToList().ForEach(user =>
         Plate = jobberUsers[i].Plate,
         WorkArea = jobberUsers[i].WorkArea
     };
+    db.Jobbers.Add(addedJobber);
 
     i++;
     
