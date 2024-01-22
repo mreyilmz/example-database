@@ -12,6 +12,8 @@ var jobberUsers = JsonConvert.DeserializeObject<IList<Jobber>>(JobberDatas.Jobbe
 
 ExampleDbContext db = new();
 
+var i = 0;
+
 users.ToList().ForEach(user =>
 {
     User addedUser = new User
@@ -25,41 +27,33 @@ users.ToList().ForEach(user =>
     };
     db.Users.Add(addedUser);
 
-    personalUsers.ToList().ForEach(personal =>
-    {
-        Personal addedPersonal = new Personal
-        {
-            UserId = addedUser.Id,
-            Salary = personal.Salary,
-            SSN = personal.SSN,
-        };
-        db.Personals.Add(addedPersonal);
-    });
 
-    studentUsers.ToList().ForEach(student =>
+    Personal addedPersonal = new Personal
     {
-        Student addedStudent = new Student
-        {
-            UserId = addedUser.Id,
-            Number = student.Number,
-            Absenteeism = student.Absenteeism,
-            Marks = student.Marks
-        };
-    });
+        UserId = addedUser.Id,
+        Salary = personalUsers[i].Salary,
+        SSN = personalUsers[i].SSN,
+    };
+    db.Personals.Add(addedPersonal);
 
-    jobberUsers.ToList().ForEach(jobber =>
+    Student addedStudent = new Student
     {
-        Jobber addedJobber = new Jobber
-        {
-            UserId = addedUser.Id,
-            Plate = jobber.Plate,
-            WorkArea = jobber.WorkArea
-        };
-    });
+        UserId = addedUser.Id,
+        Number = studentUsers[i].Number,
+        Absenteeism = studentUsers[i].Absenteeism,
+        Marks = studentUsers[i].Marks
+    };
+
+    Jobber addedJobber = new Jobber
+    {
+        UserId = addedUser.Id,
+        Plate = jobberUsers[i].Plate,
+        WorkArea = jobberUsers[i].WorkArea
+    };
+
+    i++;
+    
 });
-
-
-
 
 
 db.SaveChanges();
